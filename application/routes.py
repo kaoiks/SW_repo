@@ -5,11 +5,14 @@ from application.form import DeviceDataForm, RuleDataForm
 from application.models import Device
 from application.models import Rule
 from application.models import Log
+from datetime import datetime
 
 @app.route("/")
 def index():
     entries = Rule.query.all()
     entries_log = Log.query.all()
+    for x in range(len(entries_log)):
+        entries_log[x].timestamp=datetime.fromtimestamp(entries_log[x].timestamp)
     return render_template('index.html', entries=entries,entries_log=entries_log)
 
 @app.route("/list_of_devices")
@@ -31,6 +34,13 @@ def add_device():
             flash("Successful submission", 'success')
             return redirect(url_for('index'))
     return render_template("add_device.html", form=form)
+
+@app.route('/update/<string:entry_mac>/<string:entry_ip>')
+def update_device(entry_mac,entry_ip):
+    entry=Device.query.get_or_404(entry_mac)
+    entry.device_ip=entry_ip
+    db.session.commit()
+    return redirect(url_for("index"))
 
 @app.route("/add_rule", methods=["GET","POST"])
 def add_rule():
