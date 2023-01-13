@@ -1,0 +1,60 @@
+
+{% extends 'layout.html' %}
+{% block content %}
+
+    <div class="col-sm-10 ml-auto mr-auto ">
+        <H2>Granted Accesses </H2>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+
+                     <th scope="col">ID</th>
+                    <th scope="col">Card ID</th>
+                    <th scope="col">Reader MAC</th>
+                    <th scope="col">Door MAC</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in entries %}
+                        <tr>
+                            <th scope="row">{{loop.index}}</th>
+
+                            <td>{{entry.card_id}}</td>
+                            <td>{{ entry.reader_mac }}</td>
+                            <td>{{ entry.door_mac }}</td>
+                            <td><a href="{{url_for('delete_rule',entry_id=entry.rule_id)}}" class="btn btn-outline-danger btn-sm">Delete</a></td>
+                        </tr>
+                {% endfor %}
+        </tbody>
+        </table>
+        <br>
+         <H2>Logs History </H2>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+
+                     <th scope="col">ID</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Card ID</th>
+                    <th scope="col">Reader MAC</th>
+                    <th scope="col">Success</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% from datetime import datetime %}
+                {% for entry_log in entries_log %}
+                        <tr>
+                            <th scope="row">{{loop.index}}</th>
+                            <td>{{datetime.(entry_log.timestamp)}}</td>
+                            <td>{{entry_log.card_id}}</td>
+                            <td>{{ entry_log.reader_mac }}</td>
+                            <td>{{ entry_log.is_success }}</td>
+                            <td><a href="{{url_for('delete_log',entry_log_id=entry_log.log_id)}}" class="btn btn-outline-danger btn-sm">Delete</a></td>
+                        </tr>
+                {% endfor %}
+        </tbody>
+        </table>
+    </div>
+{% endblock %}
