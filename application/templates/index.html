@@ -43,11 +43,11 @@
                 </tr>
             </thead>
             <tbody>
-                {% from datetime import datetime %}
+               
                 {% for entry_log in entries_log %}
                         <tr>
                             <th scope="row">{{loop.index}}</th>
-                            <td>{{datetime.(entry_log.timestamp)}}</td>
+                            <td>{{entry_log.timestamp}}</td>
                             <td>{{entry_log.card_id}}</td>
                             <td>{{ entry_log.reader_mac }}</td>
                             <td>{{ entry_log.is_success }}</td>
