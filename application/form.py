@@ -23,9 +23,9 @@ def doors_mac_choices():
 
 class RuleDataForm(FlaskForm):
     card_id = StringField('Cart ID', [validators.input_required()])
-    reader_mac = QuerySelectField('Reader', query_factory=readers_mac_choices, get_label='device_mac')
+    reader_mac = QuerySelectField('Reader', query_factory=readers_mac_choices, get_label=lambda s : '%s %s' % (s.device_mac, s.name) if (s!="") else s.device_mac)
     # reader_mac = StringField('Reader')
-    door_mac = QuerySelectField('Door', query_factory=doors_mac_choices, get_label='device_mac')
+    door_mac = QuerySelectField('Door', query_factory=doors_mac_choices, get_label=lambda s : '%s %s' % (s.device_mac, s.name) if (s!="") else s.device_mac)
     submit = SubmitField('Submit')
 
 class DeviceEditForm(FlaskForm):
