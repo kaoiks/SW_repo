@@ -1,0 +1,39 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="offset-2 mb-4 col-sm-8  flex-center text-center justify-content-center">
+    <div class="card card-style offset-2 mb-4 col-sm-8  flex-center text-center justify-content-center">
+        <div class="card-body">
+            <form action="" method="POST">
+                {{ form.csrf_token() }}
+
+                <fieldset class="form-group">
+                    <legend class="mb-4">Edit Device</legend>
+                    <div class="form-group">
+                         <th scope="col">Device MAC:</th>
+                            <br>
+                        {{ entry.device_mac }}
+
+                    </div>
+
+                    <div class="form-group">
+                         <th scope="col">Device IP:</th><br>
+                        {{ entry.device_ip }}
+
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.edit_name.label(class = "form-control-label") }}
+                        {{ form.edit_name(class = "form-control form-control-sm", value=entry.name) }}
+                    </div>
+
+                    <div class="form-group border-bottom pb-3">
+                        {{ form.submit(class="btn btn-outline-info")}}
+                    </div>
+                </fieldset>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
