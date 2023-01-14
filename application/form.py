@@ -27,3 +27,7 @@ class RuleDataForm(FlaskForm):
     # reader_mac = StringField('Reader')
     door_mac = QuerySelectField('Door', query_factory=doors_mac_choices, get_label='device_mac')
     submit = SubmitField('Submit')
+
+class DeviceEditForm(FlaskForm):
+    edit_name = StringField('Description')
+    submit = SubmitField('Submit')
