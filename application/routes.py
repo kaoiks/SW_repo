@@ -1,7 +1,7 @@
 
 from application import app, db
 from flask import render_template, flash, redirect, url_for, get_flashed_messages
-from application.form import DeviceDataForm, RuleDataForm
+from application.form import DeviceDataForm, RuleDataForm, DeviceEditForm
 from application.models import Device
 from application.models import Rule
 from application.models import Log
@@ -35,12 +35,18 @@ def add_device():
             return redirect(url_for('index'))
     return render_template("add_device.html", form=form)
 
-@app.route('/update/<string:entry_mac>/<string:entry_ip>')
-def update_device(entry_mac,entry_ip):
-    entry=Device.query.get_or_404(entry_mac)
-    entry.device_ip=entry_ip
-    db.session.commit()
-    return redirect(url_for("index"))
+@app.route("/edit_device/<string:entry_mac>", methods=["GET","POST"])
+def edit_device(entry_mac):
+    form=DeviceEditForm()
+    entry = Device.query.get_or_404(entry_mac)
+
+    if form.validate_on_submit():
+        entry.name = form.edit_name.data
+
+        db.session.commit()
+        flash("Successful edit", 'success')
+        return redirect(url_for('list_of_devices'))
+    return render_template('edit_device.html', entry=entry, form=form)
 
 @app.route("/add_rule", methods=["GET","POST"])
 def add_rule():
