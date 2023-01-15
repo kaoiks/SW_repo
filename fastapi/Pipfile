@@ -9,6 +9,8 @@ uvicorn = {extras = ["standard"], version = "*"}
 pip = "*"
 databases = {extras = ["sqlite"], version = "*"}
 sqlalchemy = "==1.4"
+boto3 = "~=1.26"
+python-dotenv = "~=0.21"
 
 [dev-packages]
 

@@ -7,6 +7,9 @@ import crud
 import models
 import schemas
 import sqlalchemy.exc
+from aws import send_email_alert
+from datetime import datetime
+
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
@@ -68,6 +71,9 @@ def read_rules(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 @app.post("/logs", response_model=schemas.Log)
 def create_log(log: schemas.Log, db: Session = Depends(get_db)):
     try:
+        if log.is_success == 0:
+            db_device = crud.get_device(db, device_mac=log.reader_mac)
+            send_email_alert(log.reader_mac, db_device.name, log.card_id, datetime.fromtimestamp(log.timestamp).strftime("%d/%m/%Y, %H:%M:%S"))
         return crud.create_log(db=db, log=log)
     except sqlalchemy.exc.IntegrityError as e:
         print(e)
