@@ -54,19 +54,6 @@ def edit_device(entry_mac):
         return redirect(url_for('list_of_devices'))
     return render_template('edit_device.html', entry=entry, form=form)
 
-@app.route("/edit_device/<string:entry_mac>", methods=["GET","POST"])
-def edit_device(entry_mac):
-    form=DeviceEditForm()
-    entry = Device.query.get_or_404(entry_mac)
-
-    if form.validate_on_submit():
-        entry.name = form.edit_name.data
-
-        db.session.commit()
-        flash("Successful edit", 'success')
-        return redirect(url_for('list_of_devices'))
-    return render_template('edit_device.html', entry=entry, form=form)
-
 @app.route("/add_rule", methods=["GET","POST"])
 def add_rule():
     form=RuleDataForm()
