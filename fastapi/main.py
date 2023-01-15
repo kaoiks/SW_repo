@@ -28,6 +28,18 @@ def create_user(device: schemas.Device, db: Session = Depends(get_db)):
     return crud.create_device(db=db, device=device)
 
 
+@app.put("/devices")
+def update_device(device: schemas.Device, db: Session = Depends(get_db)):
+    print(device)
+    db_device = crud.get_device(db, device_mac=device.device_mac)
+    if db_device:
+        db_device.device_ip = device.device_ip
+        db.commit()
+        return {'message': 'Device updated successfully'}
+
+    raise HTTPException(status_code=404, detail='Device doesn\'t exist')
+
+
 @app.get("/devices", response_model=list[schemas.Device])
 def read_devices(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     devices = crud.get_devices(db, skip=skip, limit=limit)

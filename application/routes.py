@@ -6,11 +6,12 @@ from application.models import Device
 from application.models import Rule
 from application.models import Log
 from datetime import datetime
+from sqlalchemy import desc
 
 @app.route("/")
 def index():
     entries = Rule.query.all()
-    entries_log = Log.query.all()
+    entries_log = Log.query.order_by(desc(Log.timestamp)).all()
     for x in range(len(entries_log)):
         entries_log[x].timestamp=datetime.fromtimestamp(entries_log[x].timestamp)
     return render_template('index.html', entries=entries,entries_log=entries_log)
@@ -19,6 +20,11 @@ def index():
 def list_of_devices():
     entries = Device.query.all()
     return render_template('list_of_devices.html', entries=entries)
+
+@app.route("/list_of_rules")
+def list_of_rules():
+    entries = Rule.query.all()
+    return render_template('list_of_rules.html', entries=entries)
 
 @app.route("/add_device", methods=["GET","POST"])
 def add_device():
@@ -34,6 +40,19 @@ def add_device():
             flash("Successful submission", 'success')
             return redirect(url_for('index'))
     return render_template("add_device.html", form=form)
+
+@app.route("/edit_device/<string:entry_mac>", methods=["GET","POST"])
+def edit_device(entry_mac):
+    form=DeviceEditForm()
+    entry = Device.query.get_or_404(entry_mac)
+
+    if form.validate_on_submit():
+        entry.name = form.edit_name.data
+
+        db.session.commit()
+        flash("Successful edit", 'success')
+        return redirect(url_for('list_of_devices'))
+    return render_template('edit_device.html', entry=entry, form=form)
 
 @app.route("/edit_device/<string:entry_mac>", methods=["GET","POST"])
 def edit_device(entry_mac):
