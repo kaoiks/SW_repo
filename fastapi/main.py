@@ -1,3 +1,5 @@
+import logging
+
 from fastapi import FastAPI
 from fastapi import Depends, FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -71,9 +73,12 @@ def read_rules(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 @app.post("/logs", response_model=schemas.Log)
 def create_log(log: schemas.Log, db: Session = Depends(get_db)):
     try:
-        if log.is_success == 0:
-            db_device = crud.get_device(db, device_mac=log.reader_mac)
-            send_email_alert(log.reader_mac, db_device.name, log.card_id, datetime.fromtimestamp(log.timestamp).strftime("%d/%m/%Y, %H:%M:%S"))
+        try:
+            if log.is_success == 0:
+                db_device = crud.get_device(db, device_mac=log.reader_mac)
+                send_email_alert(log.reader_mac, db_device.name, log.card_id, datetime.fromtimestamp(log.timestamp).strftime("%d/%m/%Y, %H:%M:%S"))
+        except Exception:
+            logging.error("COULND'T SEND EMAIL")
         return crud.create_log(db=db, log=log)
     except sqlalchemy.exc.IntegrityError as e:
         print(e)

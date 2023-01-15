@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2cd18a1d-0e8e-47b6-a5c0-42877d350125" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/fastapi/aws.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fastapi/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/fastapi/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fastapi/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/fastapi/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fastapi/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/fastapi/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/instance/sw_db.db" beforeDir="false" afterPath="$PROJECT_DIR$/instance/sw_db.db" afterDir="false" />
-    </list>
+    <list default="true" id="2cd18a1d-0e8e-47b6-a5c0-42877d350125" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -141,7 +134,7 @@
       <workItem from="1673651010132" duration="2863000" />
       <workItem from="1673690571469" duration="1532000" />
       <workItem from="1673692738561" duration="4632000" />
-      <workItem from="1673782283146" duration="3712000" />
+      <workItem from="1673782283146" duration="3877000" />
     </task>
     <servers />
   </component>
